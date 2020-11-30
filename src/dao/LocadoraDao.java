@@ -54,7 +54,7 @@ public class LocadoraDao implements LocadoraDaoIn {
 		ps.setString(1, _objeto.getEndereco());
 		ps.setString(2, _objeto.getNome());
 		ps.setString(3, _objeto.getCidade());
-		ps.setInt(7, _objeto.getIdlocadora());
+		ps.setInt(4, _objeto.getIdlocadora());
 		
 		return ps.execute();
 	}
@@ -73,9 +73,9 @@ public class LocadoraDao implements LocadoraDaoIn {
 		while (rs.next()) {
 			
 			int idlocadora = rs.getInt(1);
-			String endereco = rs.getString(5);
-			String nome = rs.getString(6);
-			String cidade = rs.getString(7);
+			String endereco = rs.getString(2);
+			String nome = rs.getString(3);
+			String cidade = rs.getString(4);
 			
 			AutomovelDao daoAutomovel = new AutomovelDao(conexao);
 			

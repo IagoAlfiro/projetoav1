@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+		template="/templates/template.xhtml">
+
+	<ui:define name="cabecalho">
+		<ui:include src="/templates/cabecalho.xhtml" />
+	</ui:define>
+	
+	<ui:define name="menu_esquerdo">
+		<ui:include src="/templates/menu_esquerdo.xhtml" />
+	</ui:define>
+	
+	<ui:define name="conteudo">
+	
+        <p:commandButton icon="pi pi-id-card" value="Cadastar Viagem" actionListener="#{paginaViagem.Clear}" 
+       	onclick="PF('dlgCriarViagem').show()"
+       	update=":fCriar:pgCriar"/>
+       	
+       	<p:commandButton icon="pi pi-refresh" value="Recarregar Pagina" action="./pag_viagem.jsf"/>
+       	
+       	<p></p>
+			
+		<h:form id="fTabela">
+		<p:dataTable id="tabViagems" var="p" value="#{paginaViagem.viagems}"
+			rows="10"
+	        paginator="true" >
+	           
+		    <p:column headerText="Idviagem">
+		        <h:outputText value="#{p.idviagem}" />
+		    </p:column>
+		 
+		    <p:column headerText="Cliente_idcliente">
+		        <h:outputText value="#{p.cliente_idcliente}" />
+		    </p:column>
+		 
+		    <p:column headerText="Motorista_idmotorista">
+		        <h:outputText value="#{p.motorista_idmotorista}" />
+		    </p:column>
+
+		    <p:column headerText="Automovel_idautomovel">
+		        <h:outputText value="#{p.automovel_idautomovel}" />
+		    </p:column>
+		 
+		    <p:column headerText="Data">
+		        <h:outputText value="#{p.data}" />
+		    </p:column>
+		 
+		    <p:column headerText="Duracao">
+		        <h:outputText value="#{p.duracao}" />
+		    </p:column>
+		    
+		    <p:column headerText="Inicio">
+		    	<h:outputText value="#{p.inicio}" />
+		    </p:column> 
+		    
+
+		    
+		    <p:column headerText="Gerenciamento">
+		        <p:commandButton icon="pi pi-pencil" actionListener="#{paginaViagem.PrepararEditar}"  
+		        	onclick="PF('dlgEditarViagem').show()"
+		        	update=":fEditar:pgEditar"/>
+		        	
+		        <p:commandButton icon="ui-icon-trash" actionListener="#{paginaViagem.PrepararEditar}"
+		        	onclick="PF('dlgDeletarViagem').show()"
+		        	update=":fDeletar:pgDeletar"/>
+		    </p:column>
+	
+		</p:dataTable>
+	</h:form>
+	
+	<p:dialog header="Editar um cadastro de Viagem" widgetVar="dlgEditarViagem" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fEditar">
+				<p:outputPanel id="pgEditar" style="text-align:center;">
+					<p:panelGrid columns="2">
+					
+						<p:outputLabel value="Idviagem" />
+						<p:inputText value="#{paginaViagem.viagem.idviagem}" disabled="true" />
+						
+						<p:outputLabel value="Cliente_idcliente" />
+						<p:inputText value="#{paginaViagem.viagem.cliente_idcliente}"/>
+					
+						<p:outputLabel value="Motorista_idmotorista" />
+						<p:inputText value="#{paginaViagem.viagem.motorista_idmotorista}"/>
+						
+						<p:outputLabel value="Automovel_idautomovel" />
+						<p:inputText value="#{paginaViagem.viagem.automovel_idautomovel}"/>
+						
+						<p:outputLabel value="Data" />
+						<p:inputText value="#{paginaViagem.viagem.data}"/>
+						
+						<p:outputLabel value="Duracao" />
+						<p:inputText value="#{paginaViagem.viagem.duracao}"/>
+						
+						<p:outputLabel value="Inicio" />
+						<p:inputText value="#{paginaViagem.viagem.inicio}"/>
+						
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaViagem.Update}"
+							oncomplete="PF('dlgEditarViagem').hide()"
+							update=":fTabela:tabViagems :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaViagem.Clear}" 
+							oncomplete="PF('dlgEditarViagem').hide()"
+							update=":fEditar:pgEditar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Deletar um cadastro de Viagem" widgetVar="dlgDeletarViagem" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fDeletar">
+				<p:outputPanel id="pgDeletar" style="text-align:center;">
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaViagem.Delete}"
+							oncomplete="PF('dlgDeletarViagem').hide()"
+							update=":fTabela:tabViagems :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaViagem.Clear}" 
+							oncomplete="PF('dlgDeletarViagem').hide()"
+							update=":fDeletar:pgDeletar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
+	<p:dialog header="cadastrar um Viagem" widgetVar="dlgCriarViagem" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fCriar">
+				<p:outputPanel id="pgCriar" style="text-align:center;">
+					<p:panelGrid columns="2">
+			
+						<p:outputLabel value="Cliente_idcliente" />
+						<p:inputText value="#{paginaViagem.viagem.cliente_idcliente}"/>
+					
+						<p:outputLabel value="Motorista_idmotorista" />
+						<p:inputText value="#{paginaViagem.viagem.motorista_idmotorista}"/>
+						
+						<p:outputLabel value="Automovel_idautomovel" />
+						<p:inputText value="#{paginaViagem.viagem.automovel_idautomovel}"/>
+						
+						<p:outputLabel value="Data" />
+						<p:inputText value="#{paginaViagem.viagem.data}"/>
+						
+						<p:outputLabel value="Duracao" />
+						<p:inputText value="#{paginaViagem.viagem.duracao}"/>
+						
+						<p:outputLabel value="Inicio" />
+						<p:inputText value="#{paginaViagem.viagem.inicio}"/>
+						
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaViagem.Insert}"
+							oncomplete="PF('dlgCriarViagem').hide()"
+							update=":fTabela:tabViagems :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaViagem.Clear}" 
+							oncomplete="PF('dlgCriarViagem').hide()"
+							update=":fCriar:pgCriar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
+	</ui:define>
+	
+	<ui:define name="rodape">
+		<ui:include src="/templates/rodape.xhtml" />
+	</ui:define>
+	
+</ui:composition>
+		
+		

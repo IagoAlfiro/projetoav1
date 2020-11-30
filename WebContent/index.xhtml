@@ -6,42 +6,29 @@
 		xmlns:p="http://primefaces.org/ui"
 		xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
 		template="/templates/template.xhtml">
-		
-		<dependency>
-		    <groupId>net.glxn</groupId>
-		    <artifactId>qrgen</artifactId>
-		    <version>1.4</version>
-		</dependency>
-		
+				
 	<ui:define name="cabecalho">
 		<ui:include src="/templates/cabecalho.xhtml" />
 	</ui:define>
 
-	
 	<ui:define name="menu_esquerdo">
 		<ui:include src="/templates/menu_esquerdo.xhtml" />
 	</ui:define>
 	
 	<ui:define name="conteudo">
-		<div style="text-align:center"></div>
+		<div style="text-align:center">
 			<h3 align='center' >PartyMove</h3>
 			<p:contentFlow value="#{ImagesView.images}" var="image">
 			    <p:graphicImage name="images/#{image}" styleClass="content" />
 			    <div class="caption">Nossos serviços - #{image}</div>
 			</p:contentFlow>
-		<div align='center'></div>
+		</div>
 		
-		<style type="text/css">
-   		body .ui-panelgrid .ui-panelgrid-cell:last-child {
-        	background-color: #ffffff;
-    	}
-		</style>
-		
-		<p:panelGrid columns="2">
-		
-		<h:outputText value="QR" />
-    	<p:barcode value="0123456789" type="qr"/>
-    	</p:panelGrid>
+		<div align='center'>
+		<p:imageCompare leftImage="/resources/images/logo1.png"
+              	rightImage="/resources/images/20.png"
+                width="450" height="435"/>
+        </div>
 		
 	</ui:define>
 	

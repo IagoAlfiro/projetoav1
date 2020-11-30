@@ -19,12 +19,12 @@ public class Locadora implements Serializable {
 		this.automoveis = new ArrayList<Automovel>();
 	}
 	
-	public Locadora(int id, String endereco, String cidade, String nome, List<Automovel> automoveis) {
+	public Locadora(int id, String endereco, String nome, String cidade, List<Automovel> automoveis) {
 		super();
 		this.idlocadora = id;
 		this.endereco = endereco;
-		this.cidade = cidade;
-		this.nome = nome;
+		this.cidade = nome;
+		this.nome = cidade;
 		this.automoveis = automoveis;
 	}
 	

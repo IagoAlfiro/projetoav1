@@ -21,7 +21,7 @@ public class AutomovelDao implements AutomovelDaoIn {
 	@Override
 	public void Insert(Automovel _objeto) throws SQLException {
 
-		String SQL = "INSERT INTO automovel (locadora_idlocadora, modelo, tipo, ano, marca) VALUES (?, ?, ?, ?, ?. ?)";
+		String SQL = "INSERT INTO automovel (locadora_idlocadora, modelo, tipo, ano, marca) VALUES (?, ?, ?, ?, ?)";
 		
 		PreparedStatement ps = this.conexao.prepareStatement(SQL);
 		
@@ -38,7 +38,7 @@ public class AutomovelDao implements AutomovelDaoIn {
 	@Override
 	public Boolean Delete(int _id) throws SQLException {
 		
-		String SQL = "DELETE FROM automovel WHERE id = ?";
+		String SQL = "DELETE FROM automovel WHERE idautomovel = ?";
 		
 		PreparedStatement ps = this.conexao.prepareStatement(SQL);
 		
@@ -50,7 +50,7 @@ public class AutomovelDao implements AutomovelDaoIn {
 	@Override
 	public Boolean Update(Automovel _objeto) throws SQLException {
 		
-		String SQL = "UPDATE pessoa SET locadora_idlocadora = ?, modelo = ?, tipo = ?, ano = ?, marca = ? WHERE idautomovel = ?";
+		String SQL = "UPDATE automovel SET locadora_idlocadora = ?, modelo = ?, tipo = ?, ano = ?, marca = ? WHERE idautomovel = ?";
 		
 		PreparedStatement ps = this.conexao.prepareStatement(SQL);
 		

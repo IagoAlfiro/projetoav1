@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="cabecalho">
+		<ui:include src="/templates/cabecalho.xhtml" />
+	</ui:define>
+
+	<ui:define name="menu_esquerdo">
+		<ui:include src="/templates/menu_esquerdo.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:commandButton icon="pi pi-id-card" value="Cadastar Motorista"
+			actionListener="#{paginaMotorista.Clear}"
+			onclick="PF('dlgCriarMotorista').show()" update=":fCriar:pgCriar" />
+
+		<p:commandButton icon="pi pi-refresh" value="Recarregar Pagina"
+			action="./pag_motorista.jsf" />
+
+		<p></p>
+
+		<h:form id="fTabela">
+			<p:dataTable id="tabMotoristas" var="p"
+				value="#{paginaMotorista.motoristas}" rows="10" paginator="true">
+
+				<p:column headerText="Idmotorista">
+					<h:outputText value="#{p.idmotorista}" />
+				</p:column>
+
+				<p:column headerText="Cpf">
+					<h:outputText value="#{p.cpf}" />
+				</p:column>
+
+				<p:column headerText="Idade">
+					<h:outputText value="#{p.idade}" />
+				</p:column>
+
+				<p:column headerText="Cel">
+					<h:outputText value="#{p.cel}" />
+				</p:column>
+
+				<p:column headerText="Email">
+					<h:outputText value="#{p.email}" />
+				</p:column>
+
+				<p:column headerText="Cidade">
+					<h:outputText value="#{p.cidade}" />
+				</p:column>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{p.nome}" />
+				</p:column>
+
+
+
+				<p:column headerText="Gerenciamento">
+					<p:commandButton icon="pi pi-pencil"
+						actionListener="#{paginaMotorista.PrepararEditar}"
+						onclick="PF('dlgEditarMotorista').show()"
+						update=":fEditar:pgEditar" />
+
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{paginaMotorista.PrepararEditar}"
+						onclick="PF('dlgDeletarMotorista').show()"
+						update=":fDeletar:pgDeletar" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog header="Editar um cadastro de Motorista"
+			widgetVar="dlgEditarMotorista" modal="true" showEffect="blind"
+			hideEffect="explode" resizable="false" appendTo="@(body)">
+
+			<h:form id="fEditar">
+				<p:outputPanel id="pgEditar" style="text-align:center;">
+					<p:panelGrid columns="2">
+
+						<p:outputLabel value="Idmotorista" />
+						<p:inputText value="#{paginaMotorista.motorista.idmotorista}"
+							disabled="true" />
+
+						<p:outputLabel value="Cpf" />
+						<p:inputText value="#{paginaMotorista.motorista.cpf}" />
+
+						<p:outputLabel value="Idade" />
+						<p:inputText value="#{paginaMotorista.motorista.idade}" />
+
+						<p:outputLabel value="Cel" />
+						<p:inputText value="#{paginaMotorista.motorista.cel}" />
+
+						<p:outputLabel value="Email" />
+						<p:inputText value="#{paginaMotorista.motorista.email}" />
+
+						<p:outputLabel value="Cidade" />
+						<p:inputText value="#{paginaMotorista.motorista.cidade}" />
+
+						<p:outputLabel value="Nome" />
+						<p:inputText value="#{paginaMotorista.motorista.nome}" />
+
+					</p:panelGrid>
+
+					<p:panelGrid columns="2">
+
+						<p:commandButton value="Confirmar"
+							actionListener="#{paginaMotorista.Update}"
+							oncomplete="PF('dlgEditarMotorista').hide()"
+							update=":fTabela:tabMotoristas :msgGlobal" />
+
+						<p:commandButton value="Cancelar"
+							actionListener="#{paginaMotorista.Clear}"
+							oncomplete="PF('dlgEditarMotorista').hide()"
+							update=":fEditar:pgEditar" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Deletar um cadastro de Motorista"
+			widgetVar="dlgDeletarMotorista" modal="true" showEffect="blind"
+			hideEffect="explode" resizable="false" appendTo="@(body)">
+
+			<h:form id="fDeletar">
+				<p:outputPanel id="pgDeletar" style="text-align:center;">
+
+					<p:panelGrid columns="2">
+
+						<p:commandButton value="Confirmar"
+							actionListener="#{paginaMotorista.Delete}"
+							oncomplete="PF('dlgDeletarMotorista').hide()"
+							update=":fTabela:tabMotoristas :msgGlobal" />
+
+						<p:commandButton value="Cancelar"
+							actionListener="#{paginaMotorista.Clear}"
+							oncomplete="PF('dlgDeletarMotorista').hide()"
+							update=":fDeletar:pgDeletar" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="cadastrar um Motorista"
+			widgetVar="dlgCriarMotorista" modal="true" showEffect="blind"
+			hideEffect="explode" resizable="false" appendTo="@(body)">
+
+			<h:form id="fCriar">
+				<p:outputPanel id="pgCriar" style="text-align:center;">
+					<p:panelGrid columns="2">
+
+						<p:outputLabel value="Cpf" />
+						<p:inputText value="#{paginaMotorista.motorista.cpf}" />
+
+						<p:outputLabel value="Idade" />
+						<p:inputText value="#{paginaMotorista.motorista.idade}" />
+
+						<p:outputLabel value="Cel" />
+						<p:inputText value="#{paginaMotorista.motorista.cel}" />
+
+						<p:outputLabel value="Email" />
+						<p:inputText value="#{paginaMotorista.motorista.email}" />
+
+						<p:outputLabel value="Cidade" />
+						<p:inputText value="#{paginaMotorista.motorista.cidade}" />
+
+						<p:outputLabel value="Nome" />
+						<p:inputText value="#{paginaMotorista.motorista.nome}" />
+
+					</p:panelGrid>
+
+					<p:panelGrid columns="2">
+
+						<p:commandButton value="Confirmar"
+							actionListener="#{paginaMotorista.Insert}"
+							oncomplete="PF('dlgCriarMotorista').hide()"
+							update=":fTabela:tabMotoristas :msgGlobal" />
+
+						<p:commandButton value="Cancelar"
+							actionListener="#{paginaMotorista.Clear}"
+							oncomplete="PF('dlgCriarMotorista').hide()"
+							update=":fCriar:pgCriar" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/templates/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>
+

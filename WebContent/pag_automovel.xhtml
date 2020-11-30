@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+		template="/templates/template.xhtml">
+
+	<ui:define name="cabecalho">
+		<ui:include src="/templates/cabecalho.xhtml" />
+	</ui:define>
+	
+	<ui:define name="menu_esquerdo">
+		<ui:include src="/templates/menu_esquerdo.xhtml" />
+	</ui:define>
+	
+	<ui:define name="conteudo">
+	
+        <p:commandButton icon="pi pi-id-card" value="Cadastar Automovel" actionListener="#{paginaAutomovel.Clear}" 
+       	onclick="PF('dlgCriarAutomovel').show()"
+       	update=":fCriar:pgCriar"/>
+       	
+       	<p:commandButton icon="pi pi-refresh" value="Recarregar Pagina" action="./pag_automovel.jsf"/>
+       	
+       	<p></p>
+			
+		<h:form id="fTabela">
+		<p:dataTable id="tabAutomovels" var="p" value="#{paginaAutomovel.automovels}"
+			rows="10"
+	        paginator="true" >
+	           
+		    <p:column headerText="Idautomovel">
+		        <h:outputText value="#{p.idautomovel}" />
+		    </p:column>
+		 
+		    <p:column headerText="Locadora_idlocadora">
+		        <h:outputText value="#{p.locadora_idlocadora}" />
+		    </p:column>
+		 
+		    <p:column headerText="Modelo">
+		        <h:outputText value="#{p.modelo}" />
+		    </p:column>
+
+		    <p:column headerText="Tipo">
+		        <h:outputText value="#{p.tipo}" />
+		    </p:column>
+		 
+		    <p:column headerText="Ano">
+		        <h:outputText value="#{p.ano}" />
+		    </p:column>
+		 
+		    <p:column headerText="Marca">
+		        <h:outputText value="#{p.marca}" />
+		    </p:column>
+		    
+	    
+		    <p:column headerText="Gerenciamento">
+		        <p:commandButton icon="pi pi-pencil" actionListener="#{paginaAutomovel.PrepararEditar}"  
+		        	onclick="PF('dlgEditarAutomovel').show()"
+		        	update=":fEditar:pgEditar"/>
+		        	
+		        <p:commandButton icon="ui-icon-trash" actionListener="#{paginaAutomovel.PrepararEditar}"
+		        	onclick="PF('dlgDeletarAutomovel').show()"
+		        	update=":fDeletar:pgDeletar"/>
+		    </p:column>
+	
+		</p:dataTable>
+	</h:form>
+	
+	<p:dialog header="Editar um cadastro de Automovel" widgetVar="dlgEditarAutomovel" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fEditar">
+				<p:outputPanel id="pgEditar" style="text-align:center;">
+					<p:panelGrid columns="2">
+					
+						<p:outputLabel value="Idautomovel" />
+						<p:inputText value="#{paginaAutomovel.automovel.idautomovel}" disabled="true" />
+						
+						<p:outputLabel value="Locadora_idlocadora" />
+						<p:inputText value="#{paginaAutomovel.automovel.locadora_idlocadora}"/>
+					
+						<p:outputLabel value="Modelo" />
+						<p:inputText value="#{paginaAutomovel.automovel.modelo}"/>
+						
+						<p:outputLabel value="Tipo" />
+						<p:inputText value="#{paginaAutomovel.automovel.tipo}"/>
+						
+						<p:outputLabel value="Ano" />
+						<p:inputText value="#{paginaAutomovel.automovel.ano}"/>
+						
+						<p:outputLabel value="Marca" />
+						<p:inputText value="#{paginaAutomovel.automovel.marca}"/>
+						
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaAutomovel.Update}"
+							oncomplete="PF('dlgEditarAutomovel').hide()"
+							update=":fTabela:tabAutomovels :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaAutomovel.Clear}" 
+							oncomplete="PF('dlgEditarAutomovel').hide()"
+							update=":fEditar:pgEditar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Deletar um cadastro de Automovel" widgetVar="dlgDeletarAutomovel" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fDeletar">
+				<p:outputPanel id="pgDeletar" style="text-align:center;">
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaAutomovel.Delete}"
+							oncomplete="PF('dlgDeletarAutomovel').hide()"
+							update=":fTabela:tabAutomovels :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaAutomovel.Clear}" 
+							oncomplete="PF('dlgDeletarAutomovel').hide()"
+							update=":fDeletar:pgDeletar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
+	<p:dialog header="cadastrar um Automovel" widgetVar="dlgCriarAutomovel" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fCriar">
+				<p:outputPanel id="pgCriar" style="text-align:center;">
+					<p:panelGrid columns="2">
+			
+						<p:outputLabel value="Locadora_idlocadora" />
+						<p:inputText value="#{paginaAutomovel.automovel.locadora_idlocadora}"/>
+					
+						<p:outputLabel value="Modelo" />
+						<p:inputText value="#{paginaAutomovel.automovel.modelo}"/>
+						
+						<p:outputLabel value="Tipo" />
+						<p:inputText value="#{paginaAutomovel.automovel.tipo}"/>
+						
+						<p:outputLabel value="Ano" />
+						<p:inputText value="#{paginaAutomovel.automovel.ano}"/>
+						
+						<p:outputLabel value="Marca" />
+						<p:inputText value="#{paginaAutomovel.automovel.marca}"/>
+						
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaAutomovel.Insert}"
+							oncomplete="PF('dlgCriarAutomovel').hide()"
+							update=":fTabela:tabAutomovels :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaAutomovel.Clear}" 
+							oncomplete="PF('dlgCriarAutomovel').hide()"
+							update=":fCriar:pgCriar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
+	</ui:define>
+	
+	<ui:define name="rodape">
+		<ui:include src="/templates/rodape.xhtml" />
+	</ui:define>
+	
+</ui:composition>
+		
+		
