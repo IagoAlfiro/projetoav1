@@ -71,7 +71,7 @@ public class ClienteDao implements ClienteDaoIn {
 
 		List<Cliente> listaCliente = new ArrayList<Cliente>();
 		
-		String SQL = "SELECT idcliente, cpf, cel, nome, endereco, cidade, email FROM automovel";
+		String SQL = "SELECT idcliente, cpf, cel, nome, endereco, cidade, email FROM cliente";
 		
 		PreparedStatement ps = this.conexao.prepareStatement(SQL);
 		

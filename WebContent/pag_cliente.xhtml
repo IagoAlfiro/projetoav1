@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+		template="/templates/template.xhtml">
+
+	<ui:define name="cabecalho">
+		<ui:include src="/templates/cabecalho.xhtml" />
+	</ui:define>
+	
+	<ui:define name="menu_esquerdo">
+		<ui:include src="/templates/menu_esquerdo.xhtml" />
+	</ui:define>
+	
+	<ui:define name="conteudo">
+			
+		<h:form id="fTabela">
+		<p:dataTable id="tabClientes" var="p" value="#{paginaCliente.clientes}"
+			rows="10"
+	        paginator="true" >
+	           
+		    <p:column headerText="Idcliente">
+		        <h:outputText value="#{p.idcliente}" />
+		    </p:column>
+		 
+		    <p:column headerText="Cpf">
+		        <h:outputText value="#{p.cpf}" />
+		    </p:column>
+		 
+		    <p:column headerText="Cel">
+		        <h:outputText value="#{p.cel}" />
+		    </p:column>
+
+		    <p:column headerText="Nome">
+		        <h:outputText value="#{p.nome}" />
+		    </p:column>
+		 
+		    <p:column headerText="Endereco">
+		        <h:outputText value="#{p.endereco}" />
+		    </p:column>
+		 
+		    <p:column headerText="Cidade">
+		        <h:outputText value="#{p.cidade}" />
+		    </p:column>
+		    
+		    <p:column headerText="Email">
+		    	<h:outputText value="#{p.email}" />
+		    </p:column> 
+		    
+
+		    
+		    <p:column headerText="Alterar()">
+		        <p:commandButton icon="pi pi-pencil" actionListener="#{paginaCliente.PrepararEditar}"  
+		        	onclick="PF('dlgEditarCliente').show()"
+		        	update=":fEditar:pgEditar"/>
+		        	
+		        <p:commandButton icon="ui-icon-trash"/>
+		    </p:column>
+	
+		</p:dataTable>
+	</h:form>
+	
+	<p:dialog header="Editar um cadastro de Cliente" widgetVar="dlgEditarCliente" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fEditar">
+				<p:outputPanel id="pgEditar" style="text-align:center;">
+					<p:panelGrid columns="2">
+					
+						<p:outputLabel value="Idcliente" />
+						<p:inputText value="#{paginaCliente.cliente.idcliente}" disabled="true" />
+						
+						<p:outputLabel value="Cpf" />
+						<p:inputText value="#{paginaCliente.cliente.cpf}"/>
+					
+						<p:outputLabel value="Cel" />
+						<p:inputText value="#{paginaCliente.cliente.cel}"/>
+						
+						<p:outputLabel value="Nome" />
+						<p:inputText value="#{paginaCliente.cliente.nome}"/>
+						
+						<p:outputLabel value="Endereco" />
+						<p:inputText value="#{paginaCliente.cliente.endereco}"/>
+						
+						<p:outputLabel value="Cidade" />
+						<p:inputText value="#{paginaCliente.cliente.cidade}"/>
+						
+						<p:outputLabel value="Email" />
+						<p:inputText value="#{paginaCliente.cliente.email}"/>
+						
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaCliente.Update}"
+							oncomplete="PF('dlgEditarCliente').hide()"
+							update=":fTabela:tabClientes :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaCliente.Clear}" 
+							oncomplete="PF('dlgEditarCliente').hide()"
+							update=":fEditar:pgEditar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+
+	</ui:define>
+	
+	<ui:define name="rodape">
+		<ui:include src="/templates/rodape.xhtml" />
+	</ui:define>
+	
+</ui:composition>
+		
+		
