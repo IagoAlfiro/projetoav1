@@ -78,6 +78,47 @@ public class ClienteBean implements Serializable {
 		}
 	}
 	
+	public void Insert() {
+		try {
+			FabricaConexao fab = new FabricaConexao();
+			Connection conn = fab.fazerConexao();
+			
+			ClienteDao daoCliente = new ClienteDao(conn);
+			
+			daoCliente.Insert(this.cliente);
+			
+			this.listaDeClientes = daoCliente.GetAll();
+			
+			this.clientes = new ListDataModel<Cliente>(listaDeClientes);
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print("teste create");
+		}
+	}
+	
+	
+	public void Delete() {
+		try {
+			FabricaConexao fab = new FabricaConexao();
+			Connection conn = fab.fazerConexao();
+			
+			ClienteDao daoCliente = new ClienteDao(conn);
+			
+			daoCliente.Delete(this.cliente.getIdcliente());
+			
+			this.listaDeClientes = daoCliente.GetAll();
+			
+			this.clientes = new ListDataModel<Cliente>(listaDeClientes);
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print("teste");
+		}
+	}
+	
 	public void Clear() {
 		this.cliente = new Cliente();
 	}

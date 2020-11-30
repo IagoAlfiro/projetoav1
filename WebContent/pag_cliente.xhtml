@@ -16,6 +16,14 @@
 	</ui:define>
 	
 	<ui:define name="conteudo">
+	
+        <p:commandButton icon="pi pi-id-card" value="Cadastar Cliente" actionListener="#{paginaCliente.Clear}" 
+       	onclick="PF('dlgCriarCliente').show()"
+       	update=":fCriar:pgCriar"/>
+       	
+       	<p:commandButton icon="pi pi-refresh" value="Recarregar Pagina" action="./pag_cliente.jsf"/>
+       	
+       	<p></p>
 			
 		<h:form id="fTabela">
 		<p:dataTable id="tabClientes" var="p" value="#{paginaCliente.clientes}"
@@ -52,12 +60,14 @@
 		    
 
 		    
-		    <p:column headerText="Alterar()">
+		    <p:column headerText="Gerenciamento">
 		        <p:commandButton icon="pi pi-pencil" actionListener="#{paginaCliente.PrepararEditar}"  
 		        	onclick="PF('dlgEditarCliente').show()"
 		        	update=":fEditar:pgEditar"/>
 		        	
-		        <p:commandButton icon="ui-icon-trash"/>
+		        <p:commandButton icon="ui-icon-trash" actionListener="#{paginaCliente.PrepararEditar}"
+		        	onclick="PF('dlgDeletarCliente').show()"
+		        	update=":fDeletar:pgDeletar"/>
 		    </p:column>
 	
 		</p:dataTable>
@@ -107,7 +117,70 @@
 				</p:outputPanel>
 			</h:form>
 	</p:dialog>
-
+	
+	<p:dialog header="Deletar um cadastro de Cliente" widgetVar="dlgDeletarCliente" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fDeletar">
+				<p:outputPanel id="pgDeletar" style="text-align:center;">
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaCliente.Delete}"
+							oncomplete="PF('dlgDeletarCliente').hide()"
+							update=":fTabela:tabClientes :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaCliente.Clear}" 
+							oncomplete="PF('dlgDeletarCliente').hide()"
+							update=":fDeletar:pgDeletar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
+	<p:dialog header="cadastrar um Cliente" widgetVar="dlgCriarCliente" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false" appendTo="@(body)">
+			
+			<h:form id="fCriar">
+				<p:outputPanel id="pgCriar" style="text-align:center;">
+					<p:panelGrid columns="2">
+			
+						<p:outputLabel value="Cpf" />
+						<p:inputText value="#{paginaCliente.cliente.cpf}"/>
+					
+						<p:outputLabel value="Cel" />
+						<p:inputText value="#{paginaCliente.cliente.cel}"/>
+						
+						<p:outputLabel value="Nome" />
+						<p:inputText value="#{paginaCliente.cliente.nome}"/>
+						
+						<p:outputLabel value="Endereco" />
+						<p:inputText value="#{paginaCliente.cliente.endereco}"/>
+						
+						<p:outputLabel value="Cidade" />
+						<p:inputText value="#{paginaCliente.cliente.cidade}"/>
+						
+						<p:outputLabel value="Email" />
+						<p:inputText value="#{paginaCliente.cliente.email}"/>
+						
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2">
+					
+						<p:commandButton value="Confirmar" actionListener="#{paginaCliente.Insert}"
+							oncomplete="PF('dlgCriarCliente').hide()"
+							update=":fTabela:tabClientes :msgGlobal" />
+						
+						<p:commandButton value="Cancelar" actionListener="#{paginaCliente.Clear}" 
+							oncomplete="PF('dlgCriarCliente').hide()"
+							update=":fCriar:pgCriar"/>
+					
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+	</p:dialog>
+	
 	</ui:define>
 	
 	<ui:define name="rodape">
